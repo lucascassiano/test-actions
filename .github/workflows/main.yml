@@ -27,4 +27,13 @@ jobs:
 
       - name: Markdown to HTML
         uses: lifepal/markdown-to-html@v1.2
+      
+      - uses: docker://pandoc/latex:2.9
+        with:
+          args: --output=output/result.html ${{ env.FILELIST }}
+          
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: output
 
