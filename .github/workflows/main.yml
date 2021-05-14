@@ -24,10 +24,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - name: Markdown to HTML
-        uses: lifepal/markdown-to-html@v1.2
       
+      - run: |
+          echo "Lorem ipsum" > lorem_1.md  # create two example files
+          echo "dolor sit amet" > lorem_2.md
+          mkdir output  # create output dir
+          # this will also include README.md
+          echo "FILELIST=$(printf '"%s" ' *.md)" >> $GITHUB_ENV
+  
       - uses: docker://pandoc/latex:2.9
         with:
           args: --output=output/result.html ${{ env.FILELIST }}
@@ -36,4 +40,5 @@ jobs:
         with:
           name: output
           path: output
+      
 
